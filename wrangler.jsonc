@@ -1,0 +1,50 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "farmersworldbackend",
+  "main": "src/worker.ts",
+  "compatibility_date": "2024-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "NODE_ENV": "production",
+    "MONGODB_DB_NAME": "farmersworld",
+    "CF_ANALYTICS_DATASET": "marketplace_events"
+  },
+  // Cloudflare R2 Bucket Binding (keys only, zero receipt files stored in R2)
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "farmersworld-media",
+      "preview_bucket_name": "farmersworld-media-dev"
+    }
+  ],
+  // Cloudflare Analytics Engine Binding
+  "analytics_engine_datasets": [
+    {
+      "binding": "MARKETPLACE_ANALYTICS",
+      "dataset": "marketplace_events"
+    }
+  ],
+  // Cloudflare Workers AI Binding for Semantic Search & Vector Embeddings
+  "ai": {
+    "binding": "AI"
+  },
+  // Cloudflare Durable Objects for low-cost memory-first Live Shipping GPS Tracking
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ORDER_TRACKER",
+        "class_name": "OrderTrackingDurableObject"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_classes": ["OrderTrackingDurableObject"]
+    }
+  ],
+  // Cron Triggers for automated payout disbursements & order expiration checks
+  "triggers": {
+    "crons": ["*/15 * * * *"]
+  }
+}

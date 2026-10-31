@@ -1,0 +1,6 @@
+{
+  "name": "FarmersWorld Backend",
+  "description": "Enterprise-grade Cloudflare Workers & MongoDB backend for agricultural marketplace with geolocation, walleting, order routing, and payments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
